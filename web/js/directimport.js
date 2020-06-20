@@ -91,7 +91,7 @@ function update_stats() {
   }
 }
 function do_save() {
-  var deck = {};
+    var deck = {};
   $('#analyzed input[type="hidden"]').each(function (index, element) {
     var card = $(element).val().split(':');
     var code = card[0], qty = parseInt(card[1], 10);

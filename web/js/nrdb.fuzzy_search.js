@@ -24,7 +24,7 @@
         });
         options = options.sort(function (a, b) {
                 if (a.title == b.title) {
-                    return a.code < b.code
+                    return a.code > b.code
                 }
           return a.title.length - b.title.length;
         });
@@ -38,7 +38,7 @@
         });
         matches.sort(function (a,b) {
                 if (a.score == b.score && a.card.title == b.card.title) {
-                    return a.card.code < b.card.code
+                    return a.card.code > b.card.code
                 }
                 return a.score > b.score ? -1 : a.score < b.score ? 1 : 0;
             });

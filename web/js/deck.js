@@ -162,11 +162,12 @@ Promise.all([NRDB.data.promise, NRDB.settings.promise]).then(function() {
 });
 
 // This will filter matchingCards to only the latest version of each card, preserving the original order of matchingCards.
+// TODO: As the dirtiest hack ever, this now does exactly the opposite of what the above claims.
 function select_only_latest_cards(matchingCards) {
   var latestCardsByTitle = {};
   for (var card of matchingCards) {
     var latestCard = latestCardsByTitle[card.title];
-    if (!latestCard || card.code > latestCard.code) {
+    if (!latestCard || card.code < latestCard.code) {
       latestCardsByTitle[card.title] = card;
     }
   }
@@ -183,11 +184,22 @@ function create_collection_tab(initialPackSelection) {
 
   var rotated_packs = Array();
   NRDB.data.packs.find().forEach(function(pack) { if (rotated_cycles[pack.cycle.code]) { rotated_packs[pack.code] = 1; } });
+    
+  var reboot_legal_cycles = Array();
+  NRDB.data.cycles.find().forEach(function(cycle) { reboot_legal_cycles[cycle.code] = ((0 < cycle.position) && (cycle.position <= 5)) });
 
+  var reboot_legal_packs = Array();
+  NRDB.data.packs.find().forEach(function(pack) { if (reboot_legal_cycles[pack.cycle.code]) { reboot_legal_packs[pack.code] = 1; } });
+    
   $('#collection_current').on('click', function(event) {
     event.preventDefault();
+    $('#pack_code').find(':checkbox').each(function(){
+      $(this).prop('checked', false);
+    });
+    update_collection_packs();
     $('#pack_code').find(':checkbox').each(function() {
-      $(this).prop('checked', !(rotated_cycles[$(this).prop('name')] || rotated_packs[$(this).prop('name')]));
+	// $(this).prop('checked', !(rotated_cycles[$(this).prop('name')] || rotated_packs[$(this).prop('name')]));
+	$(this).prop('checked', (reboot_legal_cycles[$(this).prop('name')] || reboot_legal_packs[$(this).prop('name')]));
     });
     update_collection_packs();
   });
