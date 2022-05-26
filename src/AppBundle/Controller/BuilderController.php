@@ -52,7 +52,12 @@ class BuilderController extends Controller
             "title"   => "ASC",
         ]);
 
-        $identities = $cardsData->select_only_latest_cards($identities);
+        // Hack to not show more IDs than we want
+	$identities = array_filter($identities, function($i) {
+	    return $i->getCode() < '10058';
+	});
+
+        $identities = $cardsData->select_only_earliest_cards($identities);
         $banned_cards = array();
         foreach ($identities as $id) {
             $i = $cardsData->get_mwl_info([$id]);

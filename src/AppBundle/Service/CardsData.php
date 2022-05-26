@@ -994,6 +994,26 @@ class CardsData
         }));
     }
 
+    public function select_only_earliest_cards(array $matchingCards)
+    {
+        $earliestCardsByTitle = [];
+        foreach ($matchingCards as $card) {
+            $earliestCard = null;
+            $title = $card->getTitle();
+
+            if (isset($earliestCardsByTitle[$title])) {
+                $earliestCard = $earliestCardsByTitle[$title];
+            }
+            if (!$earliestCard || $card->getCode() < $earliestCard->getCode()) {
+                $earliestCardsByTitle[$title] = $card;
+            }
+        }
+
+        return array_values(array_filter($matchingCards, function ($card) use ($earliestCardsByTitle) {
+            return $card->getCode() == $earliestCardsByTitle[$card->getTitle()]->getCode();
+        }));
+    }
+
     public function get_versions_by_code(array $cards_code)
     {
         $cards = $this->entityManager->getRepository(Card::class)->findBy(['code' => $cards_code]);

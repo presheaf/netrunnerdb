@@ -82,7 +82,7 @@ class FactionController extends Controller
                     $points += intval($row['points']);
                 }
 
-                $identity = $cardsData->select_only_latest_cards($identities);
+                $identity = $cardsData->select_only_earliest_cards($identities);
                 $i = $cardsData->get_mwl_info([$identity[0]]);
                 if (count($i) > 0 && $i[0]['active']) {
                     $banned_cards[$identity[0]->getCode()] = true;

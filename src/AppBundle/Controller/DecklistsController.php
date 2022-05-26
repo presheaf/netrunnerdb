@@ -33,7 +33,7 @@ class DecklistsController extends Controller
         $response->setPublic();
         $response->setMaxAge($this->getParameter('short_cache'));
 
-        $limit = 30;
+        $limit = 100;
         if ($page < 1) {
             $page = 1;
         }
