@@ -13,6 +13,7 @@
          <th>Subtype</th>
          <th title="Influence">&bullet;</th>
          <th>Set</th>
+         <th>RC?</th>
       </tr>
    </thead>
    {% for i in 0..cards|length-1 %}
@@ -34,6 +35,7 @@
          {% endif %}
       </td>
       <td data-th="Set"><span class="icon icon-{{ card.cycle_code }}"></span> {{ card.pack_name }} {{ card.position }}</td>
+      <td data-th="RC"> {% if card.code == '06037' %} R {% endif $}</td>
    </tr>
    {% endfor %}
 </table>
