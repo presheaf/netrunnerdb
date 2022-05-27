@@ -702,7 +702,7 @@ class CardsData
             "small_image_path"  => $card->getSmallImagePath(),
             "medium_image_path" => $card->getMediumImagePath(),
             "large_image_path"  => $card->getLargeImagePath(),
-	    "is_reboot_changed" => in_array($card->getCode(), self::reboot_changed_codes),
+	    "is_reboot_changed" => in_array($card->getCode(), self::$reboot_changed_codes),
         ];
 
         // setting the card cost to X if the cost is null and the card is not of a costless type
