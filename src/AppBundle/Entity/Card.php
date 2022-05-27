@@ -1019,6 +1019,14 @@ class Card implements NormalizableInterface, TimestampableInterface
     }
 
     /**
+     * @return bool
+     */
+    public function isRebootChanged()
+    {
+      return $this->code == '06013';
+    }
+
+    /**
      * @return null|string
      */
     public function getImageUrl()
