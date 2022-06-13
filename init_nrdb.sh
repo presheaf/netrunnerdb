@@ -8,3 +8,7 @@ php bin/console doctrine:schema:update --force
 
 # -f = yes to all
 php bin/console app:import:std -f /nr_data_repo_json/
+
+
+# also remember
+php bin/console assets:install

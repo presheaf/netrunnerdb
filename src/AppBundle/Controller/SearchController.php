@@ -405,9 +405,35 @@ class SearchController extends Controller
 
         $cardsData->validateConditions($conditions);
 
+
+        // hacky solution if cycle query is not passed, sneak it into the conditions yourself
+	// new variable is needed to avoid messing up the old one
+	// or at least that was the intent, is it the case?
+	$conditionsForSearch = $conditions;
+	$cycleConditionExists = False;
+
+	foreach ($conditions as $i => $l){
+	    if($l[0] == 'c'){
+	        $cycleConditionExists = True;
+	    }
+	}
+
+	if (!$cycleConditionExists){
+	   // add condition that cycle is not in the non-rotating
+	   $conditionsForSearch[] = ['c', '!', '10']; //mumbad
+	   $conditionsForSearch[] = ['c', '!', '11']; //flashpoint
+	   $conditionsForSearch[] = ['c', '!', '12']; //red sand
+	   $conditionsForSearch[] = ['c', '!', '13']; //terminal directive
+	   $conditionsForSearch[] = ['c', '!', '21']; //kitara
+	   $conditionsForSearch[] = ['c', '!', '22']; //reign and reverie
+	   $conditionsForSearch[] = ['c', '!', '23']; //magum opus
+	}
+
+
         // reconstruction de la bonne chaine de recherche pour affichage
         $q = $cardsData->buildQueryFromConditions($conditions);
-        $rows = $cardsData->get_search_rows($conditions, $sort, $locale);
+
+        $rows = $cardsData->get_search_rows($conditionsForSearch, $sort, $locale);
         $rows = $cardsData->select_only_earliest_cards($rows);
         if ($q && $rows) {
             if (count($rows) == 1) {
