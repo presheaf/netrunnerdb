@@ -1,17 +1,18 @@
 # This file is auto-generated during the composer install
 parameters:
-    database_host: 127.0.0.1
-    database_port: null
+    # database_host: 127.0.0.1    # this might need to be changed
+    database_host: nrdb_db
+    database_port: 3306
     database_name: netrunnerdb
-    database_user: root
-    database_password: jigoro12
+    database_user: user
+    database_password: testpwd
     mailer_transport: smtp
     mailer_host: 127.0.0.1
-    mailer_user: null
-    mailer_password: null
-    email_sender_address: null
-    email_sender_name: null
-    secret: ThisTokenIsNotSoSecretChangeIt
+    mailer_user: user
+    mailer_password: testpwd
+    email_sender_address: 127.0.0.1
+    email_sender_name: sender
+    secret: VerySecretToken
     locale: en
     long_cache: 86400
     short_cache: 600
