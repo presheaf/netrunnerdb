@@ -103,7 +103,7 @@ class CardsData
                 "available" => $pack->getDateRelease() ? $pack->getDateRelease()->format('Y-m-d') : '',
                 "known"     => intval($real),
                 "total"     => $max,
-                "url"       => $this->router->generate('cards_list', ['pack_code' => $pack->getCode()], UrlGeneratorInterface::ABSOLUTE_URL),
+                "url"       => $this->router->generate('cards_list', ['pack_code' => $pack->getCode()], UrlGeneratorInterface::RELATIVE_PATH),
             ];
         }
 
@@ -130,7 +130,7 @@ class CardsData
                     "available" => $pack->getDateRelease() ? $pack->getDateRelease()->format('Y-m-d') : '',
                     "known"     => $pack->getCardCount(),
                     "total"     => $max,
-                    "url"       => $this->router->generate('cards_list', ['pack_code' => $pack->getCode()], UrlGeneratorInterface::ABSOLUTE_URL),
+                    "url"       => $this->router->generate('cards_list', ['pack_code' => $pack->getCode()], UrlGeneratorInterface::RELATIVE_PATH),
                     "search"    => "e:" . $pack->getCode(),
                     "icon"      => $pack->getCycle()->getCode(),
                 ];
@@ -145,7 +145,7 @@ class CardsData
                     "available"  => $packs[0]["available"],
                     "known"  => intval($sreal),
                     "total"  => $smax,
-                    "url"    => $this->router->generate('cards_cycle', ['cycle_code' => $cycle->getCode()], UrlGeneratorInterface::ABSOLUTE_URL),
+                    "url"    => $this->router->generate('cards_cycle', ['cycle_code' => $cycle->getCode()], UrlGeneratorInterface::RELATIVE_PATH),
                     "search" => 'c:' . $cycle->getCode(),
                     "packs"  => $packs,
                     "icon"   => $cycle->getCode(),
@@ -717,7 +717,7 @@ class CardsData
             $cardinfo['strength'] = 'X';
         }
 
-        $cardinfo['url'] = $this->router->generate('cards_zoom', ['card_code' => $card->getCode(), '_locale' => $locale], UrlGeneratorInterface::ABSOLUTE_URL);
+        $cardinfo['url'] = $this->router->generate('cards_zoom', ['card_code' => $card->getCode(), '_locale' => $locale], UrlGeneratorInterface::RELATIVE_PATH);
         $cardinfo['imageUrl'] = $cardinfo['imageUrl'] ?: $this->packages->getUrl($card->getCode() . ".png", "card_image");
 
         // replacing <trace>

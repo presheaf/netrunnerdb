@@ -114,7 +114,7 @@ class ModerationHelper
                 'decklist_id'   => $decklist->getId(),
                 'decklist_name' => $decklist->getPrettyname(),
             ],
-            UrlGeneratorInterface::ABSOLUTE_URL
+            UrlGeneratorInterface::RELATIVE_PATH
         );
 
         $body = $this->twig->render(

@@ -75,7 +75,7 @@ class OauthController extends Controller
                 'grant_type'    => 'authorization_code',
                 'code'          => $code,
             ],
-            UrlGenerator::ABSOLUTE_URL
+            UrlGenerator::RELATIVE_PATH
         );
 
         $client = new Client();

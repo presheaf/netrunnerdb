@@ -70,7 +70,7 @@ class ClaimsController extends AbstractOauthController
         $entityManager->flush();
 
         $jsend = $this->getJsendResponse('success', ['claim' => $claim]);
-        $url = $this->generateUrl('app_claims_get', ['decklist_id' => $decklist_id, 'id' => $claim->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $url = $this->generateUrl('app_claims_get', ['decklist_id' => $decklist_id, 'id' => $claim->getId()], UrlGeneratorInterface::RELATIVE_PATH);
 
         return $this->createJsonResponse($jsend, 201, ['Location' => $url]);
     }
