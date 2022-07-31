@@ -20,7 +20,7 @@
   };
 
   function fill_modal (code) {
-      // var card = NRDB.data.cards.findById(code);
+      var card = NRDB.data.cards.findById(code);
       // // this is actually what's wrong
       // console.log("fill_modal");
       // console.log(card);
