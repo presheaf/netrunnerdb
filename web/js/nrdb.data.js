@@ -92,7 +92,7 @@
 
                                 if (dbName === 'cards') {
                                     response.data.forEach(function (card) {
-                                        card.imageUrl = response.imageUrlTemplate.replace(/{code}/, card.code);
+                                        card.imageUrl = card.image_url || response.imageUrlTemplate.replace(/{code}/, card.code);
                                     });
                                 }
 

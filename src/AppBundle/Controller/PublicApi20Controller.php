@@ -298,7 +298,7 @@ class PublicApi20Controller extends FOSRestController
             throw $this->createNotFoundException();
         }
 
-        return $this->prepareResponse([$card], $request, ['imageUrlTemplate' => '/card_image/large/{code}.jpg']);
+        return $this->prepareResponse([$card], $request, ['imageUrlTemplate' => $request->getSchemeAndHttpHost() . '/card_image/large/{code}.jpg']);
     }
 
     /**
@@ -316,7 +316,7 @@ class PublicApi20Controller extends FOSRestController
     {
         $data = $this->entityManager->getRepository('AppBundle:Card')->findAll();
 
-        return $this->prepareResponse($data, $request, ['imageUrlTemplate' => '/card_image/large/{code}.jpg']);
+        return $this->prepareResponse($data, $request, ['imageUrlTemplate' => $request->getSchemeAndHttpHost() . '/card_image/large/{code}.jpg']);
     }
 
     /**
