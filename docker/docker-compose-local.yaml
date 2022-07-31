@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  nrdb_web:
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    # volumes:
+      # - ./config.edn:/netrunner/config.edn
+      # - resources:/netrunner/resources
+
+    depends_on:
+      - nrdb_db
+    networks:
+      - nrdb_db_network
+      - web_network
+    restart: 'always'
+    ports:                      # can access on port 8080
+      - '8080:80'
+    volumes:
+      - /home/karlerik/hobby/netrunner-data/json:/nr_data_repo_json/
+
+  nrdb_db:
+    image: mysql
+    ports: 
+      - "3306:3306"
+    networks:
+      - nrdb_db_network
+    environment:
+      MYSQL_ROOT_PASSWORD: secretrootpwd
+      MYSQL_DATABASE: netrunnerdb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: testpwd
+
+    # volumes:
+    #   - persistent:/var/lib/mysql
+
+networks:
+  nrdb_db_network:
+  web_network:
