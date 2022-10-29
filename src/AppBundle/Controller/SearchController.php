@@ -412,22 +412,22 @@ class SearchController extends Controller
 	$conditionsForSearch = $conditions;
 	$cycleConditionExists = False;
 
-	foreach ($conditions as $i => $l){
-	    if($l[0] == 'c'){
-	        $cycleConditionExists = True;
-	    }
-	}
+	// foreach ($conditions as $i => $l){
+	//     if($l[0] == 'c'){
+	//         $cycleConditionExists = True;
+	//     }
+	// }
 
-	if (!$cycleConditionExists){
-	   // add condition that cycle is not in the non-rotating
-	   $conditionsForSearch[] = ['c', '!', '10']; //mumbad
-	   $conditionsForSearch[] = ['c', '!', '11']; //flashpoint
-	   $conditionsForSearch[] = ['c', '!', '12']; //red sand
-	   $conditionsForSearch[] = ['c', '!', '13']; //terminal directive
-	   $conditionsForSearch[] = ['c', '!', '21']; //kitara
-	   $conditionsForSearch[] = ['c', '!', '22']; //reign and reverie
-	   $conditionsForSearch[] = ['c', '!', '23']; //magum opus
-	}
+	// if (!$cycleConditionExists){
+	//    // add condition that cycle is not in the non-rotating
+	//    $conditionsForSearch[] = ['c', '!', '10']; //mumbad
+	//    $conditionsForSearch[] = ['c', '!', '11']; //flashpoint
+	//    $conditionsForSearch[] = ['c', '!', '12']; //red sand
+	//    $conditionsForSearch[] = ['c', '!', '13']; //terminal directive
+	//    $conditionsForSearch[] = ['c', '!', '21']; //kitara
+	//    $conditionsForSearch[] = ['c', '!', '22']; //reign and reverie
+	//    $conditionsForSearch[] = ['c', '!', '23']; //magum opus
+	// }
 
 
         // reconstruction de la bonne chaine de recherche pour affichage
