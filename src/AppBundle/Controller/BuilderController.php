@@ -52,6 +52,11 @@ class BuilderController extends Controller
             "title"   => "ASC",
         ]);
 
+        // Hack to drop the Draft IDs
+	$identities = array_filter($identities, function($i) {
+	    return ($i->getCode() != '00006') && ($i->getCode() != '00005');
+	});
+
         $identities = $cardsData->select_only_earliest_cards($identities);
         $banned_cards = array();
         foreach ($identities as $id) {
