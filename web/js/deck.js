@@ -186,7 +186,7 @@ function create_collection_tab(initialPackSelection) {
   NRDB.data.packs.find().forEach(function(pack) { if (rotated_cycles[pack.cycle.code]) { rotated_packs[pack.code] = 1; } });
     
   var reboot_legal_cycles = Array();
-  NRDB.data.cycles.find().forEach(function(cycle) { reboot_legal_cycles[cycle.code] = ((0 < cycle.position) && (cycle.position <= 9)) });
+  NRDB.data.cycles.find().forEach(function(cycle) { reboot_legal_cycles[cycle.code] = ((0 < cycle.position) && (cycle.position <= 10)) });
 
   var reboot_legal_packs = Array();
   NRDB.data.packs.find().forEach(function(pack) { if (reboot_legal_cycles[pack.cycle.code]) { reboot_legal_packs[pack.code] = 1; } });
@@ -199,6 +199,7 @@ function create_collection_tab(initialPackSelection) {
     update_collection_packs();
     $('#pack_code').find(':checkbox').each(function() {
 	// $(this).prop('checked', !(rotated_cycles[$(this).prop('name')] || rotated_packs[$(this).prop('name')]));
+	// $(this).prop('checked', (reboot_legal_cycles[$(this).prop('name')] || reboot_legal_packs[$(this).prop('name')]));
 	$(this).prop('checked', (reboot_legal_cycles[$(this).prop('name')] || reboot_legal_packs[$(this).prop('name')]));
     });
     update_collection_packs();
