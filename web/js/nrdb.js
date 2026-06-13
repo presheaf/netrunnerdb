@@ -123,6 +123,9 @@ function getDisplayDescriptions(sort) {
             }, {
                 id: 'sunny-lebeau',
                 label: 'Sunny Lebeau',
+            }, {
+                id: 'mako',
+                label: 'Mako',
             }],
         ],
         'number': [],

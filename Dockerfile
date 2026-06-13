@@ -17,7 +17,7 @@ COPY 000-default.conf /etc/apache2/sites-available/
 COPY apache2.conf /etc/apache2/
 
 RUN mkdir -p /netrunnerdb/var/cache/prod/
-
+RUN php bin/console assets:install --symlink web
 # does this chown enough?
 RUN chown -R www-data /netrunnerdb/var
 

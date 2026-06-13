@@ -19,6 +19,7 @@ services:
       - '8080:80'
     volumes:
       - /home/karlerik/hobby/netrunner-data/json:/nr_data_repo_json/
+      - /home/karlerik/hobby/reboot_card_images:/netrunnerdb/web/card_image/large:ro
 
   nrdb_db:
     image: mysql
