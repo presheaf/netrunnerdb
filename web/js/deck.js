@@ -1,4 +1,14 @@
 var InputByTitle = false;
+
+// Dual-faction agendas: map card code -> their true factions (not neutral-corp)
+var DUAL_FACTION_CARDS = {
+  '52015': ['weyland-consortium', 'haas-bioroid'],
+  '52016': ['jinteki', 'haas-bioroid'],
+  '52017': ['weyland-consortium', 'jinteki'],
+  '53014': ['nbn', 'haas-bioroid'],
+  '53015': ['nbn', 'jinteki'],
+  '54030': ['weyland-consortium', 'nbn'],
+};
 var Snapshots = []; // deck contents autosaved
 var Autosave_timer = null;
 var Deck_changed_since_last_autosave = false;
@@ -808,6 +818,40 @@ function update_filtered() {
 
   var matchingCards = NRDB.data.cards.find(SmartFilterQuery, {'$orderBy':orderBy});
   var sortedCards = select_only_latest_cards(matchingCards);
+
+  var factionFilter = FilterQuery['faction_code'];
+  if (factionFilter && factionFilter.length > 0) {
+    var dualCodes = Object.keys(DUAL_FACTION_CARDS);
+    // Remove dual-faction cards that appear only because they're coded neutral-corp,
+    // or that aren't legal for the current identity
+    sortedCards = sortedCards.filter(function(card) {
+      if (dualCodes.indexOf(card.code) === -1) return true;
+      var trueFactions = DUAL_FACTION_CARDS[card.code];
+      var identityCanUse = trueFactions.indexOf(Identity.faction_code) !== -1;
+      var factionMatches = trueFactions.some(function(f) { return factionFilter.indexOf(f) !== -1; });
+      return identityCanUse && factionMatches;
+    });
+    // Add dual-faction cards whose true faction is selected, are legal for this identity,
+    // and aren't already in the list
+    var existingCodes = sortedCards.map(function(c) { return c.code; });
+    dualCodes.forEach(function(code) {
+      if (existingCodes.indexOf(code) !== -1) return;
+      var trueFactions = DUAL_FACTION_CARDS[code];
+      var identityCanUse = trueFactions.indexOf(Identity.faction_code) !== -1;
+      var factionMatches = trueFactions.some(function(f) { return factionFilter.indexOf(f) !== -1; });
+      if (identityCanUse && factionMatches) {
+        var card = NRDB.data.cards.findById(code);
+        if (card) sortedCards.push(card);
+      }
+    });
+    // Re-sort to place injected cards in the correct position
+    sortedCards.sort(function(a, b) {
+      var aVal = a[Sort], bVal = b[Sort];
+      var cmp = aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
+      if (cmp !== 0) return cmp * Order;
+      return a.title < b.title ? -1 : a.title > b.title ? 1 : 0;
+    });
+  }
 
   sortedCards.forEach(function(card) {
     if (ShowOnlyDeck && !card.indeck)
